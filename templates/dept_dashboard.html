@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Department Dashboard</title>
+    <style>
+        body { font-family: Arial; background-color: #f0f0f0; margin: 0; }
+        .navbar {
+            background-color: #1a6b3c;
+            padding: 15px 30px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar a { color: white; text-decoration: none; margin-left: 20px; }
+        .content { padding: 40px; }
+        .stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            flex: 1;
+        }
+        .stat-card h2 { font-size: 40px; margin: 0; }
+        .stat-card p  { margin: 5px 0 0 0; color: #666; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        th {
+            background-color: #1a6b3c;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        td { padding: 15px; border-bottom: 1px solid #ddd; }
+        tr:hover { background-color: #f9f9f9; }
+        .pending    { color: orange; font-weight: bold; }
+        .resolved   { color: green;  font-weight: bold; }
+        .inprogress { color: blue;   font-weight: bold; }
+        select, input[type=text] {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin: 3px 0;
+            width: 100%;
+        }
+        .update-btn {
+            padding: 5px 10px;
+            background-color: #1a6b3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 5px;
+        }
+        .update-btn:hover { background-color: #145a32; }
+        .no-complaints {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <b>🎓 {{ name }}</b>
+        <div>
+            <span>Complaints assigned to {{ dept }}</span>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+    <div class="content">
+        <h2>📋 {{ dept }} Department Complaints</h2>
+
+        <div class="stats">
+            <div class="stat-card">
+                <h2>{{ complaints|length }}</h2>
+                <p>Total Complaints</p>
+            </div>
+            <div class="stat-card">
+                <h2 style="color:orange">
+                    {{ complaints|selectattr("status","equalto","Pending")|list|length }}
+                </h2>
+                <p>Pending</p>
+            </div>
+            <div class="stat-card">
+                <h2 style="color:blue">
+                    {{ complaints|selectattr("status","equalto","In Progress")|list|length }}
+                </h2>
+                <p>In Progress</p>
+            </div>
+            <div class="stat-card">
+                <h2 style="color:green">
+                    {{ complaints|selectattr("status","equalto","Resolved")|list|length }}
+                </h2>
+                <p>Resolved</p>
+            </div>
+        </div>
+
+        {% if complaints %}
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Student</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Update</th>
+                <th>Date</th>
+            </tr>
+            {% for c in complaints %}
+            <tr>
+                <td>{{ c.complaint_id }}</td>
+                <td>{{ c.student_name }}</td>
+                <td>{{ c.title }}</td>
+                <td>{{ c.description }}</td>
+                <td>{{ c.priority }}</td>
+                <td class="
+                    {% if c.status == 'Pending' %}pending
+                    {% elif c.status == 'Resolved' %}resolved
+                    {% else %}inprogress{% endif %}">
+                    {{ c.status }}
+                </td>
+                <td>
+                    <form action="/dept_update_status" method="POST">
+                        <input type="hidden" name="complaint_id" value="{{ c.complaint_id }}"/>
+                        <select name="status">
+                            <option {% if c.status == 'Pending' %}selected{% endif %}>Pending</option>
+                            <option {% if c.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                            <option {% if c.status == 'Resolved' %}selected{% endif %}>Resolved</option>
+                        </select>
+                        <input type="text" name="remarks" placeholder="Add remarks..."/>
+                        <button class="update-btn" type="submit">Update</button>
+                    </form>
+                </td>
+                <td>{{ c.created_at.strftime('%d %b %Y') }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <div class="no-complaints">
+            🎉 No complaints assigned to your department yet!
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

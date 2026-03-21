@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Complaints</title>
+    <style>
+        body { font-family: Arial; background-color: #f0f0f0; margin: 0; }
+        .navbar {
+            background-color: #4CAF50;
+            padding: 15px 30px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar a { color: white; text-decoration: none; margin-left: 20px; }
+        .content { padding: 40px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        td { padding: 15px; border-bottom: 1px solid #ddd; }
+        tr:hover { background-color: #f9f9f9; }
+        .pending  { color: orange; font-weight: bold; }
+        .resolved { color: green;  font-weight: bold; }
+        .inprogress { color: blue; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <b>🎓 Complaint System</b>
+        <div>
+            <a href="/student_dashboard">Dashboard</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+    <div class="content">
+        <h2>📋 My Complaints</h2>
+        {% if complaints %}
+        <table>
+            <tr>
+                <th>Complaint ID</th>
+                <th>Title</th>
+                <th>Department</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+            {% for c in complaints %}
+            <tr>
+                <td>{{ c.complaint_id }}</td>
+                <td>{{ c.title }}</td>
+                <td>{{ c.department }}</td>
+                <td>{{ c.priority }}</td>
+                <td class="
+                    {% if c.status == 'Pending' %}pending
+                    {% elif c.status == 'Resolved' %}resolved
+                    {% else %}inprogress{% endif %}">
+                    {{ c.status }}
+                </td>
+                <td>{{ c.created_at.strftime('%d %b %Y') }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>You have not raised any complaints yet!</p>
+        {% endif %}
+    </div>
+</body>
+</html>

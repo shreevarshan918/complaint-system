@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Raise Complaint</title>
+    <style>
+        body {
+            font-family: Arial;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background-color: #4CAF50;
+            padding: 15px 30px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        .content {
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+        }
+        .box {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            width: 500px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 120px;
+            resize: none;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .anonymous {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <b>🎓 Complaint System</b>
+        <div>
+            <a href="/student_dashboard">Dashboard</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+    <div class="content">
+        <div class="box">
+            <h2>📝 Raise a Complaint</h2>
+            <form action="/raise_complaint" method="POST" enctype="multipart/form-data">
+                <input type="text" name="title" placeholder="Complaint Title" required/>
+                <textarea name="description" placeholder="Describe your complaint in detail..." required></textarea>
+                <select name="priority" required>
+                    <option value="">Select Priority</option>
+                    <option value="Low">🟢 Low</option>
+                    <option value="Medium">🟡 Medium</option>
+                    <option value="High">🔴 High</option>
+                    <option value="Urgent">🚨 Urgent</option>
+                </select>
+                <label>Upload Proof (Photo/Video)</label>
+                <input type="file" name="proof" accept="image/*,video/*"/>
+                <div class="anonymous">
+                    <input type="checkbox" name="anonymous" id="anonymous" style="width:auto"/>
+                    <label for="anonymous">Keep my name hidden (Anonymous complaint)</label>
+                </div>
+                <button type="submit">Submit Complaint</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
