@@ -13,7 +13,10 @@ UPLOAD_FOLDER = "static/uploads"
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "mp4", "mov"}
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-client = MongoClient("mongodb+srv://admin:<Admin123>@cluster0.spzwnjn.mongodb.net/?appName=Cluster0")
+import os
+client = MongoClient(os.environ.get("MONGO_URI"))
+
+
 db = client["complaint_system"]
 
 students_col    = db["students"]
