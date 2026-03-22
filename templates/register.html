@@ -1,88 +1,113 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Complaint System - Register</title>
+    <title>BGSCET - Register</title>
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: Arial;
-            background-color: #f0f0f0;
+            background: linear-gradient(135deg, #FF6B00, #FF8C00);
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            justify-content: center;
+            padding: 20px;
         }
-        .box {
+        .card {
             background: white;
             padding: 40px;
-            border-radius: 10px;
-            width: 350px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            width: 420px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
         }
-        h2 {
-            text-align: center;
-            color: #333;
+        .header { text-align: center; margin-bottom: 25px; }
+        .logo-circle {
+            width: 60px;
+            height: 60px;
+            background: #FF6B00;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 28px;
         }
+        .college-name { font-size: 13px; color: #FF6B00; font-weight: bold; letter-spacing: 1px; }
+        h2 { color: #333; font-size: 20px; margin-top: 5px; }
         input, select {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
+            padding: 11px;
+            margin-bottom: 12px;
             border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
         }
+        input:focus, select:focus { border-color: #FF6B00; }
+        .hint { font-size: 12px; color: #999; margin-top: -8px; margin-bottom: 10px; }
         button {
             width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
+            padding: 13px;
+            background: #FF6B00;
             color: white;
             border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            border-radius: 10px;
             font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
         }
-        button:hover {
-            background-color: #45a049;
-        }
-        p {
+        button:hover { background: #e55c00; }
+        .error {
+            background: #ffe0e0;
+            color: #c0392b;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 14px;
             text-align: center;
         }
-        a {
-            color: #4CAF50;
-        }
+        .links { text-align: center; margin-top: 15px; font-size: 14px; color: #666; }
+        .links a { color: #FF6B00; text-decoration: none; }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h2>🎓 Complaint System</h2>
-        <h3 style="text-align:center">Register</h3>
-        <form action="/register" method="POST">
-            <input type="text" name="name" placeholder="Your Full Name" required/>
-            <input type="email" name="email" placeholder="Your College Email" required/>
+    <div class="card">
+        <div class="header">
+            <div class="logo-circle">🎓</div>
+            <div class="college-name">BGSCET</div>
+            <h2>Student Registration</h2>
+        </div>
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+        <form method="POST">
+            <input type="text" name="name" placeholder="Full Name" required/>
+            <input type="email" name="email" placeholder="yourname@bgscet.ac.in" required/>
+            <div class="hint">⚠️ Only @bgscet.ac.in emails are allowed</div>
             <input type="password" name="password" placeholder="Create Password" required/>
-            <input type="text" name="roll_no" placeholder="Your Roll Number" required/>
+            <input type="text" name="roll_no" placeholder="Roll Number" required/>
             <select name="year" required>
-                <option value="">Select Your Semester</option>
-                <option value="1st sem">1st Semester</option>
-                <option value="2nd sem">2nd Semester</option>
-                <option value="3rd sem">3rd Semester</option>
-                <option value="4th sem">4th Semester</option>
-                <option value="5th sem">5th Semester</option>
-                <option value="6th sem">6th Semester</option>
-                <option value="7th sem">7th Semester</option>
-                <option value="8th sem">8th Semester</option>
+                <option value="">Select Semester</option>
+                <option>1st Semester</option>
+                <option>2nd Semester</option>
+                <option>3rd Semester</option>
+                <option>4th Semester</option>
+                <option>5th Semester</option>
+                <option>6th Semester</option>
+                <option>7th Semester</option>
+                <option>8th Semester</option>
             </select>
             <select name="department" required>
-                <option value="">Select Your Department</option>
-                <option value="CSE">CSE</option>
-                <option value="ECE">ECE</option>
-                <option value="ME">ME</option>
-                <option value="CE">CE</option>
-                <option value="EEE">EEE</option>
+                <option value="">Select Department</option>
+                <option>CSE</option>
+                <option>ECE</option>
+                <option>ME</option>
+                <option>CE</option>
+                <option>EEE</option>
             </select>
             <button type="submit">Register</button>
         </form>
-        <p>Already registered? <a href="/login">Login here</a></p>
+        <div class="links">Already registered? <a href="/login">Login here</a></div>
     </div>
 </body>
 </html>

@@ -1,98 +1,104 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Raise Complaint</title>
+    <title>BGSCET - Raise Complaint</title>
     <style>
-        body {
-            font-family: Arial;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial; background: #f5f5f5; }
         .navbar {
-            background-color: #4CAF50;
+            background: #FF6B00;
             padding: 15px 30px;
             color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .navbar a {
-            color: white;
-            text-decoration: none;
-            margin-left: 20px;
-        }
-        .content {
-            padding: 40px;
-            display: flex;
-            justify-content: center;
-        }
-        .box {
+        .navbar a { color: white; text-decoration: none; margin-left: 20px; }
+        .content { padding: 40px; display: flex; justify-content: center; }
+        .card {
             background: white;
             padding: 40px;
-            border-radius: 10px;
-            width: 500px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            width: 560px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
+        .card h2 { color: #FF6B00; margin-bottom: 25px; }
+        label { display: block; color: #555; font-size: 14px; margin-bottom: 5px; margin-top: 15px; }
         input, select, textarea {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
+            padding: 11px;
             border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
+            border-radius: 10px;
+            font-size: 14px;
+            outline: none;
         }
-        textarea {
-            height: 120px;
-            resize: none;
-        }
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .anonymous {
+        input:focus, select:focus, textarea:focus { border-color: #FF6B00; }
+        textarea { height: 120px; resize: none; }
+        .anonymous-row {
             display: flex;
             align-items: center;
             gap: 10px;
-            margin: 10px 0;
+            margin-top: 15px;
+            padding: 12px;
+            background: #fff8f0;
+            border-radius: 10px;
+            border: 1px solid #ffd8b0;
+        }
+        .anonymous-row input { width: auto; margin: 0; }
+        .anonymous-row label { margin: 0; color: #FF6B00; font-weight: bold; }
+        button {
+            width: 100%;
+            padding: 13px;
+            background: #FF6B00;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        button:hover { background: #e55c00; }
+        .ai-badge {
+            display: inline-block;
+            background: #fff0e0;
+            color: #FF6B00;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-left: 8px;
         }
     </style>
 </head>
 <body>
     <div class="navbar">
-        <b>🎓 Complaint System</b>
+        <b>🎓 BGSCET Complaint System</b>
         <div>
             <a href="/student_dashboard">Dashboard</a>
             <a href="/logout">Logout</a>
         </div>
     </div>
     <div class="content">
-        <div class="box">
-            <h2>📝 Raise a Complaint</h2>
-            <form action="/raise_complaint" method="POST" enctype="multipart/form-data">
-                <input type="text" name="title" placeholder="Complaint Title" required/>
-                <textarea name="description" placeholder="Describe your complaint in detail..." required></textarea>
+        <div class="card">
+            <h2>📝 Raise a Complaint <span class="ai-badge">🤖 AI Routing</span></h2>
+            <form method="POST" enctype="multipart/form-data">
+                <label>Complaint Title</label>
+                <input type="text" name="title" placeholder="Brief title of your complaint" required/>
+                <label>Description <span style="color:#888;font-size:12px">(AI will auto-detect department)</span></label>
+                <textarea name="description" placeholder="Describe your complaint in detail... (mention hostel, class, canteen etc)" required></textarea>
+                <label>Priority</label>
                 <select name="priority" required>
                     <option value="">Select Priority</option>
-                    <option value="Low">🟢 Low</option>
-                    <option value="Medium">🟡 Medium</option>
-                    <option value="High">🔴 High</option>
-                    <option value="Urgent">🚨 Urgent</option>
+                    <option>Low</option>
+                    <option>Medium</option>
+                    <option>High</option>
+                    <option>Urgent</option>
                 </select>
-                <label>Upload Proof (Photo/Video)</label>
+                <label>Upload Proof (Photo/Video) — Optional</label>
                 <input type="file" name="proof" accept="image/*,video/*"/>
-                <div class="anonymous">
-                    <input type="checkbox" name="anonymous" id="anonymous" style="width:auto"/>
-                    <label for="anonymous">Keep my name hidden (Anonymous complaint)</label>
+                <div class="anonymous-row">
+                    <input type="checkbox" name="anonymous" id="anon"/>
+                    <label for="anon">🔒 Submit anonymously — your name will be hidden from department</label>
                 </div>
                 <button type="submit">Submit Complaint</button>
             </form>
