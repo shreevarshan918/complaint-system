@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BGSCET - My Profile</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial; background: #f5f5f5; }
+        .navbar {
+            background: #FF6B00;
+            padding: 15px 30px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar a { color: white; text-decoration: none; margin-left: 20px; }
+        .content { padding: 40px; max-width: 600px; margin: 0 auto; }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 20px;
+        }
+        .avatar {
+            width: 80px;
+            height: 80px;
+            background: #FF6B00;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            margin: 0 auto 15px;
+            font-weight: bold;
+        }
+        h2 { text-align: center; color: #333; margin-bottom: 5px; }
+        .email { text-align: center; color: #666; font-size: 14px; margin-bottom: 20px; }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 15px;
+        }
+        .info-row span:first-child { color: #666; }
+        .info-row span:last-child { color: #333; font-weight: bold; }
+        label { display: block; color: #666; font-size: 14px; margin: 15px 0 5px; }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+        }
+        input:focus, textarea:focus { border-color: #FF6B00; }
+        textarea { height: 80px; resize: none; }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #FF6B00;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        button:hover { background: #e55c00; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <b>🎓 BGSCET Complaint System</b>
+        <div>
+            <a href="/student_dashboard">Dashboard</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+    <div class="content">
+        <div class="card">
+            <div class="avatar">{{ student.name[0] }}</div>
+            <h2>{{ student.name }}</h2>
+            <div class="email">{{ student.email }}</div>
+            <div class="info-row">
+                <span>Roll Number</span>
+                <span>{{ student.roll_no }}</span>
+            </div>
+            <div class="info-row">
+                <span>Department</span>
+                <span>{{ student.department }}</span>
+            </div>
+            <div class="info-row">
+                <span>Semester</span>
+                <span>{{ student.year }}</span>
+            </div>
+            <div class="info-row">
+                <span>Phone</span>
+                <span>{{ student.phone or 'Not added' }}</span>
+            </div>
+        </div>
+        <div class="card">
+            <h3 style="color:#FF6B00;margin-bottom:10px">Edit Profile</h3>
+            <form method="POST">
+                <label>Phone Number</label>
+                <input type="text" name="phone" value="{{ student.phone or '' }}" placeholder="Your phone number"/>
+                <label>Bio</label>
+                <textarea name="bio" placeholder="Tell something about yourself...">{{ student.bio or '' }}</textarea>
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
