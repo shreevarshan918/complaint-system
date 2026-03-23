@@ -4,4 +4,3 @@ bcrypt
 werkzeug
 waitress
 dnspython
-flask-mail
